@@ -7,15 +7,33 @@
     <link rel="stylesheet" href="Stylesheet.css">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K"></script>
     <script>
-        function onClick(e) {
-            e.preventDefault();
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K', {action: 'submit'}).then(function(token) {
-                    document.getElementById("myform").submit();
-                });
+        window.onload = function() {
+            const form = document.getElementById('myform');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (validateForm()) {
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K', {action: 'submit'})
+                        .then(function(token) {
+                            form.submit();
+                        });
+                    });
+                }
             });
+        };
+
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const reason = document.getElementById('contact-reason').value;
+            
+            if (!name || !email || !message || !reason) {
+                alert('Please fill in all required fields');
+                return false;
+            }
+            return true;
         }
-        </script>
     </script>
     <title>Digital CV | Jeremiah Thurston</title>
 </head>
@@ -234,9 +252,7 @@
                     <option value="Reference Request">Reference Request</option>
                     <option value="Other">Other</option>
                 </select>
-                <button type="submit" onclick="onClick(event)" class="g-recaptcha" 
-                data-sitekey="6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K" 
-                data-callback='onSubmit'>Submit</button>
+                <button type="submit">Submit</button>
                 <button type="reset">Clear</button>
             </form>
         </section>
