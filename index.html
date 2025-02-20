@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="Stylesheet.css">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K"></script>
     <script>
-        function onSubmit(token) {
-            document.getElementById("myform").submit()
+        function onClick(e) {
+            e.preventDefault();
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K', {action: 'submit'}).then(function(token) {
+                    document.getElementById("myform").submit();
+                });
+            });
         }
+        </script>
     </script>
     <title>Digital CV | Jeremiah Thurston</title>
 </head>
@@ -228,10 +234,9 @@
                     <option value="Reference Request">Reference Request</option>
                     <option value="Other">Other</option>
                 </select>
-                <button class="g-recaptcha" 
-                data-sitekey="r6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K" 
-                data-callback='onSubmit' 
-                data-action='submit' type="submit">Submit</button>
+                <button type="submit" onclick="onClick(event)" class="g-recaptcha" 
+                data-sitekey="6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K" 
+                data-callback='onSubmit'>Submit</button>
                 <button type="reset">Clear</button>
             </form>
         </section>
