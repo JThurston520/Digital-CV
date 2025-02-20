@@ -7,32 +7,22 @@
     <link rel="stylesheet" href="Stylesheet.css">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K"></script>
     <script>
-        window.onload = function() {
-            const form = document.getElementById('myform');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                if (validateForm()) {
-                    grecaptcha.ready(function() {
-                        grecaptcha.execute('6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K', {action: 'submit'})
-                        .then(function(token) {
-                            form.submit();
-                        });
-                    });
-                }
+        function handleSubmit(e) {
+            e.preventDefault();
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Lcgd9wqAAAAACN1e8Jfqv0vlUoMkoyKjVff4w6K', {action: 'submit'})
+                .then(function(token) {
+                    // Add the token to a hidden input field
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'g-recaptcha-response';
+                    input.value = token;
+                    document.getElementById('myform').appendChild(input);
+                    
+                    // Submit the form
+                    document.getElementById('myform').submit();
+                });
             });
-        };
-
-        function validateForm() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const reason = document.getElementById('contact-reason').value;
-            
-            if (!name || !email || !message || !reason) {
-                alert('Please fill in all required fields');
-                return false;
-            }
-            return true;
         }
     </script>
     <title>Digital CV | Jeremiah Thurston</title>
@@ -237,7 +227,7 @@
         <!--Contact Form-->
         <section id="contact-me" class="content-section">
             <h2>Contact Me!</h2>
-            <form id = "myform" action="https://formspree.io/f/xvgzwpdk" method="post">
+            <form id = "myform" action="https://formspree.io/f/xvgzwpdk" method="post" onsubmit="handleSubmit(event)">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter Your Full Name" required>
                 <label for="email">Email:</label>
