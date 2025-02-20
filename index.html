@@ -6,6 +6,11 @@
     <meta name="description" content="Digital CV of Jeremiah Thurston">
     <link rel="stylesheet" href="Stylesheet.css">
     <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit() {
+            document.getElementById("myform").submit()
+        }
+    </script>
     <title>Digital CV | Jeremiah Thurston</title>
 </head>
 
@@ -208,7 +213,7 @@
         <!--Contact Form-->
         <section id="contact-me" class="content-section">
             <h2>Contact Me!</h2>
-            <form action="https://formspree.io/f/xvgzwpdk" method="post">
+            <form id = "myform" action="https://formspree.io/f/xvgzwpdk" method="post">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter Your Full Name" required>
                 <label for="email">Email:</label>
@@ -260,10 +265,5 @@
         https://stackoverflow.com/questions/2815699/create-static-toolbar-on-webpage-that-follows-scroll-in-html
 
         -->
-        <script>
-function onSubmit(token) {
-    document.getElementById("contact-form").submit();
-}
-</script>
 </body>
 </html>
